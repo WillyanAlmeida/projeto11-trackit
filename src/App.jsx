@@ -1,5 +1,7 @@
 import styled from "styled-components"
 import HomePage from "./pages/HomePage/HomePage"
+import Habits from "./pages/Habits/Habits"
+import SingUp from "./pages/SingUp/SingUp"
 import { BrowserRouter, Routes, Route, useSearchParams } from "react-router-dom"
 import { useNavigate } from "react-router-dom"
 import axios from 'axios';
@@ -7,25 +9,25 @@ import { useState } from "react"
 
 export default function App() {
 
-    // axios.defaults.headers.common['Authorization'] = 'LYBJtjK2liCOeAleBGOoZq8T';
+  // axios.defaults.headers.common['Authorization'] = 'LYBJtjK2liCOeAleBGOoZq8T';
 
-    return (
-        <>
-            <BrowserRouter>
-                {/* <NavContainer >CINEFLEX</NavContainer> */}
-                <Routes>
+  return (
+    <>
+      <BrowserRouter>
+        {/* <NavContainer >CINEFLEX</NavContainer> */}
+        <Routes>
+          
+          {/* <Route path='/' element={<HomePage />} /> */}
+          <Route path='/cadastro' element={<SingUp />} />
+          <Route path='/habitos' element={<Habits />} />
+          {/* <Route path='/hoje' element={<Today />}/> */}
+          {/* <Route path='/historico' element={<History />}/> */}
 
-                    <Route path='/' element={<HomePage />} />
-                    <Route path='/cadastro' element={<SeatsPage />} />
-                    <Route path='/habitos' element={<SessionsPage />} />
-                    <Route path='/hoje' element={<SuccessPage />}/>
-                    <Route path='/historico' element={<SuccessPage />}/>
+        </Routes>
 
-                </Routes>
-
-            </BrowserRouter>
-        </>
-    )
+      </BrowserRouter>
+    </>
+  )
 }
 
 const NavContainer = styled.div`

@@ -1,23 +1,16 @@
 import styled from "styled-components"
-
 import logo from '../../assets/logo.png'
 import axios from 'axios';
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
 
-export default function HomePage() {
+
+export default function SingUp(){
     let [email, setEmail] = useState('');
     let [password, setPassword] = useState('')
-
-    // useEffect(() => {
-    //     const requisicao = axios.get("https://mock-api.driven.com.br/api/v8/cineflex/movies");
-
-    //     requisicao.then(resposta => {
-    //         setMovies(resposta.data);
-    //         });
-    // }, []);
-
+    let [name, setName] = useState('')
+    let [picture, setPicture] = useState('')
     return (
         <PageContainer>
            <img src={logo}></img>
@@ -28,7 +21,11 @@ export default function HomePage() {
                 
                 <input data-test="password-input" id="password" required placeholder="senha" value={password} onChange={e => setPassword(e.target.value)} />
 
-                <button data-test="login-btn" type="submit">Entrar</button>
+                <input data-test="user-name-input"  id="name" required placeholder="Nome" value={name} onChange={e => setName(e.target.value)} />
+
+                <input data-test="user-image-input" id="picture" required placeholder="foto" value={picture} onChange={e => setPicture(e.target.value)} />
+
+                <button data-test="signup-btn" type="submit">Cadastrar</button>
             </FormContainer>
             
 
