@@ -2,6 +2,9 @@ import styled from "styled-components"
 import HomePage from "./pages/HomePage/HomePage"
 import Habits from "./pages/Habits/Habits"
 import SingUp from "./pages/SingUp/SingUp"
+import NavBar from "./pages/NavBar/NavBar"
+import Menu from "./pages/Menu/Menu"
+
 import { BrowserRouter, Routes, Route, useSearchParams } from "react-router-dom"
 import { useNavigate } from "react-router-dom"
 import axios from 'axios';
@@ -15,6 +18,8 @@ export default function App() {
     <>
       <BrowserRouter>
         {/* <NavContainer >CINEFLEX</NavContainer> */}
+        <NavBar/>
+        <Menu/>
         <Routes>
           
           {/* <Route path='/' element={<HomePage />} /> */}

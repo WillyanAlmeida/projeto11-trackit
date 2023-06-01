@@ -18,7 +18,6 @@ export default function SingUp(){
                 
                 <input data-test="email-input"  id="email"  required type="email" placeholder="email" value={email} onChange={e => setEmail(e.target.value)}/>
 
-                
                 <input data-test="password-input" id="password" required placeholder="senha" value={password} onChange={e => setPassword(e.target.value)} />
 
                 <input data-test="user-name-input"  id="name" required placeholder="Nome" value={name} onChange={e => setName(e.target.value)} />
@@ -26,6 +25,7 @@ export default function SingUp(){
                 <input data-test="user-image-input" id="picture" required placeholder="foto" value={picture} onChange={e => setPicture(e.target.value)} />
 
                 <button data-test="signup-btn" type="submit">Cadastrar</button>
+                <p> Já tem uma conta? Faça login! </p>
             </FormContainer>
             
 
@@ -51,16 +51,25 @@ const PageContainer = styled.div`
 const FormContainer = styled.form`
     width: calc(100vw - 40px); 
     display: flex;
+    gap: 10px;
     flex-direction: column;
     align-items: flex-start;
-    margin: 20px 0;
+    margin: 10px 0 10px 0;
+    margin-bottom: 10px;
     font-size: 18px;
     button {
+        margin-bottom: 10px;
         width: calc(100vw - 60px);
         align-self: center;
         background-color: #52B6FF;
     }
     input {
+       
         width: calc(100vw - 60px);
+    }
+    p{
+        margin-top: 10px;
+        color: #52B6FF;
+        font-size: 14px;
     }
 `

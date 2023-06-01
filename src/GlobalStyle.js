@@ -18,16 +18,20 @@ const GlobalStyle = createGlobalStyle`
 			background-color: lightgray;
 		}
 	}
+	
 	input {
 		background: #FFFFFF;
 		border: 1px solid #D5D5D5;
 		border-radius: 3px;
 		height: 50px;
-		margin-bottom: 25px;
+		margin-bottom: 10px;
 		margin-top: 10px;
 		padding: 0 10px;
-		font-family: 'Roboto';
-		font-size: 18px;
+		font-family: 'Lexend Deca';
+font-style: normal;
+font-weight: 400;
+font-size: 19.976px;
+line-height: 25px;
 		display: flex;
 		align-items: center;
 		&::placeholder{
