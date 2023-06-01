@@ -3,6 +3,8 @@ import HomePage from "./pages/HomePage/HomePage"
 import Habits from "./pages/Habits/Habits"
 import SingUp from "./pages/SingUp/SingUp"
 import NavBar from "./pages/NavBar/NavBar"
+import Today from "./pages/Today/Today"
+import History from "./pages/History/History"
 import Menu from "./pages/Menu/Menu"
 
 import { BrowserRouter, Routes, Route, useSearchParams } from "react-router-dom"
@@ -22,11 +24,11 @@ export default function App() {
         <Menu/>
         <Routes>
           
-          {/* <Route path='/' element={<HomePage />} /> */}
+          <Route path='/' element={<HomePage />} />
           <Route path='/cadastro' element={<SingUp />} />
           <Route path='/habitos' element={<Habits />} />
-          {/* <Route path='/hoje' element={<Today />}/> */}
-          {/* <Route path='/historico' element={<History />}/> */}
+          <Route path='/hoje' element={<Today />}/>
+          <Route path='/historico' element={<History />}/>
 
         </Routes>
 

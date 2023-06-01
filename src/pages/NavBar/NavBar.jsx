@@ -20,7 +20,7 @@ export default function NavBar() {
 
 const NavContainer = styled.div`
 font-family: 'Playball', cursive;
-    width: 95vw;
+    width: 100vw;
     height: 70px;
     display: flex;
     align-items: center;
