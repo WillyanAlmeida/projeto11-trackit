@@ -63,7 +63,7 @@ position: relative;
     height: 0 auto;
     background: #FFFFFF;
     border-radius: 5px;
-    padding-top: 15px;
+    padding-top: 10px;
     padding-left: 15px;
    h4{
     margin: 0;

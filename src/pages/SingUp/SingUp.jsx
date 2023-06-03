@@ -6,28 +6,52 @@ import { Link } from "react-router-dom";
 
 
 
-export default function SingUp(){
+export default function SingUp() {
     let [email, setEmail] = useState('');
     let [password, setPassword] = useState('')
     let [name, setName] = useState('')
     let [picture, setPicture] = useState('')
+    let [btstats, setBtstats] = useState(false)
+
+    function sendpost(e) {
+
+        e.preventDefault();
+        setBtstats(true);
+
+        const cadastro = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/sign-up", {
+            email: email,
+            name: name,
+            image: picture,
+            password: password
+        })
+        cadastro.then(() => navigate("/"))
+
+        cadastro.catch(erro => {
+            alert(erro.response.data.message);
+            setBtstats(false)
+        });
+    }
+
     return (
         <PageContainer>
-           <img src={logo}></img>
-           <FormContainer >
-                
-                <input data-test="email-input"  id="email"  required type="email" placeholder="email" value={email} onChange={e => setEmail(e.target.value)}/>
+            <img src={logo}></img>
+            <FormContainer btstats={btstats} onSubmit={sendpost}>
 
-                <input data-test="password-input" id="password" required placeholder="senha" value={password} onChange={e => setPassword(e.target.value)} />
+                <input disabled={btstats} data-test="email-input" id="email" required type="email" placeholder="email" value={email} onChange={e => setEmail(e.target.value)} />
 
-                <input data-test="user-name-input"  id="name" required placeholder="Nome" value={name} onChange={e => setName(e.target.value)} />
+                <input disabled={btstats} data-test="password-input" id="password" required type="password" placeholder="senha" value={password} onChange={e => setPassword(e.target.value)} />
 
-                <input data-test="user-image-input" id="picture" required placeholder="foto" value={picture} onChange={e => setPicture(e.target.value)} />
+                <input disabled={btstats} data-test="user-name-input" id="name" required type="text" placeholder="Nome" value={name} onChange={e => setName(e.target.value)} />
 
-                <button data-test="signup-btn" type="submit">Cadastrar</button>
-                <p> Já tem uma conta? Faça login! </p>
+                <input disabled={btstats} data-test="user-image-input" id="picture" required type="url" placeholder="foto" value={picture} onChange={e => setPicture(e.target.value)} />
+
+                <button disabled={btstats}  data-test="signup-btn" type="submit">Cadastrar</button>
+
             </FormContainer>
-            
+            <Link to={`/`}>
+                <p> Já tem uma conta? Faça login! </p>
+            </Link>
+
 
         </PageContainer>
     )
@@ -36,6 +60,7 @@ export default function SingUp(){
 const PageContainer = styled.div`
     display: flex;
     flex-direction: column;
+    justify-content: center;
     align-items: center;
     font-family: 'Roboto';
     font-size: 24px;
@@ -46,6 +71,11 @@ const PageContainer = styled.div`
     img{
         width: 180px;
         height: 180px;
+    }
+    p{
+        margin-top: 10px;
+        color: #52B6FF;
+        font-size: 14px;
     }
 `
 const FormContainer = styled.form`
@@ -60,16 +90,11 @@ const FormContainer = styled.form`
     button {
         margin-bottom: 10px;
         width: calc(100vw - 60px);
-        align-self: center;
-        background-color: #52B6FF;
+        
+        background-color: ${btstats => btstats.btstats ? 'gray' : '#52B6FF'};
     }
     input {
        
         width: calc(100vw - 60px);
     }
-    p{
-        margin-top: 10px;
-        color: #52B6FF;
-        font-size: 14px;
-    }
-`
+   `

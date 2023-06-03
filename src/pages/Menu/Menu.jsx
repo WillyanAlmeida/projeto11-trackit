@@ -37,6 +37,7 @@ return(
 }
 
 const MenuContainer = styled.div`
+z-index: 3;
 font-family: 'Playball', cursive;
     width: 100vw;
     height: 70px;

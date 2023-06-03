@@ -6,32 +6,41 @@ import NavBar from "./pages/NavBar/NavBar"
 import Today from "./pages/Today/Today"
 import History from "./pages/History/History"
 import Menu from "./pages/Menu/Menu"
+import { UserContext } from "./Context"
+import React, { createContext, useContext, useState } from "react";
 
-import { BrowserRouter, Routes, Route, useSearchParams } from "react-router-dom"
+import { BrowserRouter, Routes, Route, useSearchParams, useLocation } from "react-router-dom"
 import { useNavigate } from "react-router-dom"
 import axios from 'axios';
-import { useState } from "react"
+
 
 export default function App() {
 
+  const [user, setUser] = useState('testanto')
+
   // axios.defaults.headers.common['Authorization'] = 'LYBJtjK2liCOeAleBGOoZq8T';
+  const usePathname = () => {
+    const location = useLocation();
+    return location.pathname;
+  }
 
   return (
     <>
       <BrowserRouter>
-        {/* <NavContainer >CINEFLEX</NavContainer> */}
-        <NavBar/>
-        <Menu/>
+        <UserContext.Provider value={{user, setUser}}>
+          {location.pathname != "/" && location.pathname != "/cadastro" && <> <NavBar /> <Menu /></>}
+        
         <Routes>
           
-          <Route path='/' element={<HomePage />} />
+            <Route path='/' element={<HomePage />} />
+
           <Route path='/cadastro' element={<SingUp />} />
           <Route path='/habitos' element={<Habits />} />
-          <Route path='/hoje' element={<Today />}/>
-          <Route path='/historico' element={<History />}/>
+          <Route path='/hoje' element={<Today />} />
+          <Route path='/historico' element={<History />} />
 
         </Routes>
-
+        </UserContext.Provider>
       </BrowserRouter>
     </>
   )

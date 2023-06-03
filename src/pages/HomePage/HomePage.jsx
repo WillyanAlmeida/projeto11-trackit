@@ -2,34 +2,48 @@ import styled from "styled-components"
 
 import logo from '../../assets/logo.png'
 import axios from 'axios';
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
+import { UserContext } from "../../Context";
 import { Link } from "react-router-dom";
 
 
 export default function HomePage() {
     let [email, setEmail] = useState('');
     let [password, setPassword] = useState('')
+    const { user, setUser} = useContext(UserContext);
 
-    // useEffect(() => {
-    //     const requisicao = axios.get("https://mock-api.driven.com.br/api/v8/cineflex/movies");
+    function loginpost(e) {
 
-    //     requisicao.then(resposta => {
-    //         setMovies(resposta.data);
-    //         });
-    // }, []);
+        e.preventDefault();
+       
+
+        const cadastro = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login", {
+            email: email,
+            password: password
+        })
+        cadastro.then((x) => setUser(x.data))
+
+        cadastro.catch(erro => {
+            alert(erro.response.data.message);
+            
+        });
+    }
 
     return (
         <PageContainer>
             <img src={logo}></img>
-            <FormContainer >
+            <FormContainer onSubmit={loginpost} >
 
                 <input data-test="email-input" id="email" required type="email" placeholder="email" value={email} onChange={e => setEmail(e.target.value)} />
 
-                <input data-test="password-input" id="password" required placeholder="senha" value={password} onChange={e => setPassword(e.target.value)} />
+                <input data-test="password-input" id="password" required type="password" placeholder="senha" value={password} onChange={e => setPassword(e.target.value)} />
 
                 <button data-test="login-btn" type="submit">Entrar</button>
-
+                
+                <Link to={`/cadastro`}>
                 <p> Não tem uma conta? Cadastre-se! </p>
+                
+                </Link>
             </FormContainer>
 
 
@@ -42,6 +56,7 @@ const PageContainer = styled.div`
     flex-direction: column;
     align-items: center;
     font-family: 'Roboto';
+    justify-content: center;
     font-size: 24px;
     text-align: center;
     color: #293845;
@@ -53,7 +68,7 @@ const PageContainer = styled.div`
     }
 `
 const FormContainer = styled.form`
-    width: calc(100vw - 40px); 
+    width: calc(100vw - 60px); 
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -70,8 +85,12 @@ const FormContainer = styled.form`
         width: calc(100vw - 60px);
     }
     p{
+
         margin-top: 10px;
         color: #52B6FF;
         font-size: 14px;
+        &:hover{
+            cursor: pointer;
+        }
     }
 `

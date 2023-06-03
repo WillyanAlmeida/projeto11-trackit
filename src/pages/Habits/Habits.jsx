@@ -1,9 +1,12 @@
 import styled from "styled-components"
 import HabitsList from "./HabitsList"
+import { UserContext } from "../../Context"
+import { useContext } from "react"
 
 
 
 export default function Habits() {
+    const {user} = useContext(UserContext)
     return (
         <HabitContainers>
 
@@ -24,6 +27,7 @@ export default function Habits() {
                         <Day>S</Day>
                         <Day>S</Day>
                     </WeekDays>
+                    
                     <Options>
                         <span>Cancelar</span>
                         <button>Salvar</button>
@@ -44,6 +48,7 @@ const HabitContainers = styled.div`
     background-color: #E5E5E5;
     height: 100vh;
     margin-top: 70px;
+    
     display:flex;
     flex-direction: column;
     align-items: center;
@@ -62,6 +67,7 @@ const MyHabitsContainer = styled.div`
             width: 338px;
             height: 74px;
             margin-top: 29px;
+            
         }
 `
 const AddHabit = styled.div`
