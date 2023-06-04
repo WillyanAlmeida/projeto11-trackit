@@ -1,16 +1,18 @@
 import styled from "styled-components";
-import logox from '../../assets/trackit-logo.png'
 
+import { UserContext } from "../../Context"
+import { useContext} from "react"
 
 
 
 
 export default function NavBar() {
-
+    const { user } = useContext(UserContext);
+    
     return (
         <NavContainer>
             <p>TrackIt</p>
-            <img src={logox}></img>
+            <img src={user.image}></img>
 
         </NavContainer>
     )

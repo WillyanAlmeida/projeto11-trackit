@@ -4,13 +4,14 @@ import logo from '../../assets/logo.png'
 import axios from 'axios';
 import { useState, useEffect, useContext } from "react";
 import { UserContext } from "../../Context";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 
 export default function HomePage() {
     let [email, setEmail] = useState('');
     let [password, setPassword] = useState('')
     const { user, setUser} = useContext(UserContext);
+    const navigate = useNavigate()
 
     function loginpost(e) {
 
@@ -21,7 +22,10 @@ export default function HomePage() {
             email: email,
             password: password
         })
-        cadastro.then((x) => setUser(x.data))
+        cadastro.then((x) => {
+            setUser(x.data)
+            navigate('/habitos')
+        })
 
         cadastro.catch(erro => {
             alert(erro.response.data.message);

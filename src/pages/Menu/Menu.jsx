@@ -5,15 +5,17 @@ import {
     buildStyles
   } from "react-circular-progressbar";
   import "react-circular-progressbar/dist/styles.css";
+  import { useNavigate } from "react-router-dom";
 
 
 export default function Menu (){
+  const navigate = useNavigate()
 
 return(
     <MenuContainer>
         
-        <p>Hábitos</p>
-        <Progress>
+        <p onClick={()=>navigate('/habitos')}>Hábitos</p>
+        <Progress onClick={()=>navigate('/hoje')}>
         <CircularProgressbar
         value={66}
         text={`hoje`}
@@ -27,7 +29,7 @@ return(
         })}
       />
       </Progress>
-        <p>Histórico</p>
+        <p onClick={()=>navigate('/historico')} >Histórico</p>
 
 
 

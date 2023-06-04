@@ -17,7 +17,8 @@ import axios from 'axios';
 export default function App() {
 
   const [user, setUser] = useState('testanto')
-
+  let [listhabits, setListhabits] = useState([])
+  let [get, setGet] = useState(0)
   // axios.defaults.headers.common['Authorization'] = 'LYBJtjK2liCOeAleBGOoZq8T';
   const usePathname = () => {
     const location = useLocation();
@@ -27,7 +28,7 @@ export default function App() {
   return (
     <>
       <BrowserRouter>
-        <UserContext.Provider value={{user, setUser}}>
+        <UserContext.Provider value={{user, setUser, listhabits, setListhabits, get, setGet}}>
           {location.pathname != "/" && location.pathname != "/cadastro" && <> <NavBar /> <Menu /></>}
         
         <Routes>

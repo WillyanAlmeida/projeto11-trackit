@@ -2,7 +2,7 @@ import styled from "styled-components"
 import logo from '../../assets/logo.png'
 import axios from 'axios';
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 
 
@@ -12,6 +12,7 @@ export default function SingUp() {
     let [name, setName] = useState('')
     let [picture, setPicture] = useState('')
     let [btstats, setBtstats] = useState(false)
+    const navigate = useNavigate()
 
     function sendpost(e) {
 

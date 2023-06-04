@@ -1,43 +1,102 @@
 import styled from "styled-components"
 import HabitsList from "./HabitsList"
 import { UserContext } from "../../Context"
-import { useContext } from "react"
+import { useContext, useState, useEffect } from "react"
+import axios from "axios";
 
 
 
 export default function Habits() {
-    const {user} = useContext(UserContext)
+    const { user, listhabits, setListhabits, get, setGet } = useContext(UserContext);
+    let [habit, setHabit] = useState('')
+    let [days, setDays] = useState([])
+    
+    let [savehabit, setSavehabit] = useState(false)
+    let [btstats, setBtstats] = useState(false)
+
+    const config = {
+        headers: {
+            "Authorization": `Bearer ${user.token}`
+        }
+    }
+    const bodyParameters = {
+        name:  habit ,
+        days: days
+    };
+    useEffect(() => {
+        console.log(config)
+        axios.get(
+            'https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits',
+            config
+        ).then(x => setListhabits(x.data)).catch(x => console.log(x));
+    }, [get]);
+
+    function selectDay(e) {
+        if (days.includes(e.target.id)) {
+            days = days.filter(item => item != e.target.id)
+            setDays([...days])
+        } else {
+            days.push(e.target.id)
+            setDays([...days])
+        }
+        console.log(days)
+        console.log(bodyParameters)
+    }
+    function sendhabit(e){
+        
+        e.preventDefault();
+        console.log(config)
+        console.log(bodyParameters)
+        setBtstats(true)
+
+        const sendhabit = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits", bodyParameters, config )
+        sendhabit.then((x) => {
+            setDays([]);
+            setHabit('');
+            setSavehabit(false);
+            setBtstats(false);
+            setGet(x)
+        })
+
+        sendhabit.catch(erro => {
+            alert(erro.response.data.message);
+            setBtstats(false)
+        });
+    }
+
     return (
         <HabitContainers>
-
+            {console.log(listhabits)}
             <MyHabitsContainer>
+
                 <AddHabit>
                     <p>Meus hábitos</p>
-                    <button>+</button>
+                    <button onClick={() => savehabit ? setSavehabit(false) : setSavehabit(true)}>+</button>
                 </AddHabit>
+                {savehabit ?
+                    <SaveHabitForm onSubmit={sendhabit}>
 
-                <SaveHabit>
-                    <input placeholder="nome do hábito" />
-                    <WeekDays>
-                        <Day>D</Day>
-                        <Day>S</Day>
-                        <Day>T</Day>
-                        <Day>Q</Day>
-                        <Day>Q</Day>
-                        <Day>S</Day>
-                        <Day>S</Day>
-                    </WeekDays>
-                    
-                    <Options>
-                        <span>Cancelar</span>
-                        <button>Salvar</button>
-                    </Options>
-                </SaveHabit>
-                    <h4>Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!</h4>
-
-
-                <HabitsList />
-
+                        <input disabled={btstats} placeholder="nome do hábito" type="text" value={habit} onChange={e => setHabit(e.target.value)} />
+                        <WeekDays disabled={btstats}>
+                            <Day id="0" stats={days.includes('0') ? true : false} onClick={selectDay} >D</Day>
+                            <Day id="1" stats={days.includes('1') ? true : false} onClick={selectDay} >S</Day>
+                            <Day id="2" stats={days.includes('2') ? true : false} onClick={selectDay} >T</Day>
+                            <Day id="3" stats={days.includes('3') ? true : false} onClick={selectDay} >Q</Day>
+                            <Day id="4" stats={days.includes('4') ? true : false} onClick={selectDay} >Q</Day>
+                            <Day id="5" stats={days.includes('5') ? true : false} onClick={selectDay} >S</Day>
+                            <Day id="6" stats={days.includes('6') ? true : false} onClick={selectDay} >S</Day>
+                        </WeekDays>
+                        <Options>
+                            <span onClick={()=>{
+                                setSavehabit(false)
+                            }}>Cancelar</span>
+                            <button disabled={btstats} type="submit">Salvar</button>
+                        </Options>
+                    </SaveHabitForm> : ""}
+                {listhabits.length === 0 ?
+                    <h4>Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!</h4> :
+                    <>{listhabits.map((x)=> <HabitsList key={x.id} list={x}/>)}</>
+                }
             </MyHabitsContainer>
 
         </HabitContainers>
@@ -65,8 +124,8 @@ const MyHabitsContainer = styled.div`
 
             color: #666666;
             width: 338px;
-            height: 74px;
-            margin-top: 29px;
+            
+            margin-top: 1px;
             
         }
 `
@@ -103,7 +162,7 @@ const AddHabit = styled.div`
 
 `
 
-const SaveHabit = styled.div`
+const SaveHabitForm = styled.form`
 
     width: 340px;
     height: 180px;
@@ -111,6 +170,7 @@ const SaveHabit = styled.div`
     border-radius: 5px;
     padding-top: 18px;
     padding-left: 18px;
+    margin-bottom: 10px;
     input{        
         width: 303px;
         height: 45px;
@@ -138,10 +198,10 @@ const Day = styled.div`
     align-items: center;
     font-size: 19.976px;
     line-height: 25px;
-    color: #DBDBDB;
+    color: ${props => props.stats ? '#ffffff' : '#dbdbdb'};
     width: 30px;
     height: 30px;
-    background: #FFFFFF;
+    background: ${props => props.stats ? '#cfcfcf' : '#ffffff'};
     border: 1px solid #D5D5D5;
     border-radius: 5px;
 `
