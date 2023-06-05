@@ -6,15 +6,18 @@ import { UserContext } from "../../Context";
 import { Link, useNavigate } from "react-router-dom";
 
 
+
 export default function HomePage() {
     let [email, setEmail] = useState('');
     let [password, setPassword] = useState('');
+    let [bts, setBts] = useState(false)
     const {setUser} = useContext(UserContext);
     const navigate = useNavigate();
 
     function loginpost(e) {
 
-        e.preventDefault();       
+        e.preventDefault(); 
+        setBts(true);      
 
         const cadastro = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login", {
             email: email,
@@ -22,12 +25,13 @@ export default function HomePage() {
         });
         cadastro.then((x) => {
             setUser(x.data)
-            navigate('/habitos')
+            navigate('/hoje')
+            setBts(false)
         });
 
         cadastro.catch(erro => {
             alert(erro.response.data.message);
-            
+            setBts(false)
         });
     }
 
@@ -36,11 +40,11 @@ export default function HomePage() {
             <img src={logo}></img>
             <FormContainer onSubmit={loginpost} >
 
-                <input data-test="email-input" id="email" required type="email" placeholder="email" value={email} onChange={e => setEmail(e.target.value)} />
+                <input disabled={bts} data-test="email-input" id="email" required type="email" placeholder="email" value={email} onChange={e => setEmail(e.target.value)} />
 
-                <input data-test="password-input" id="password" required type="password" placeholder="senha" value={password} onChange={e => setPassword(e.target.value)} />
+                <input disabled={bts} data-test="password-input" id="password" required type="password" placeholder="senha" value={password} onChange={e => setPassword(e.target.value)} />
 
-                <button data-test="login-btn" type="submit">Entrar</button>
+                <button disabled={bts} data-test="login-btn" type="submit">{'Entrar'}</button>
                 
                 <Link data-test="signup-link" to={`/cadastro`}>
                 <p> Não tem uma conta? Cadastre-se! </p>

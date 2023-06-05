@@ -23,7 +23,10 @@ export default function SingUp() {
             image: picture,
             password: password
         })
-        cadastro.then(() => navigate("/"))
+        cadastro.then(() => {            
+            navigate("/")
+            setBtstats(false)
+        })
 
         cadastro.catch(erro => {
             alert(erro.response.data.message);
