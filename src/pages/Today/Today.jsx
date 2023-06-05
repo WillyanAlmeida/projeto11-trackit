@@ -9,10 +9,12 @@ import calendar from "dayjs/plugin/calendar";
 import axios from "axios";
 import { UserContext } from "../../Context"
 import { useContext, useEffect } from "react"
+import { useNavigate } from "react-router-dom";
 
 
 export default function Today() {
     const { user, get, progressBar, setProgressBar, listItens, setListItens } = useContext(UserContext);
+    const navigate = useNavigate()
 
     let x = 0;
     dayjs.extend(advancedFormat);
@@ -26,8 +28,11 @@ export default function Today() {
         }
     }
 
+        if(user.token===undefined){
+            navigate('/')
+        }
+
     useEffect(() => {
-        console.log(config)
         axios.get(
             'https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/today',
             config

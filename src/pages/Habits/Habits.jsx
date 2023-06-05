@@ -25,7 +25,6 @@ export default function Habits() {
         days: days
     };
     useEffect(() => {
-        console.log(config)
         axios.get(
             'https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits',
             config
@@ -40,11 +39,9 @@ export default function Habits() {
             days.push(e.target.id)
             setDays([...days])
         }
-        console.log(days)
-        console.log(bodyParameters)
+        
     }
     useEffect(() => {
-        console.log(config)
         axios.get(
             'https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/today',
             config
@@ -62,8 +59,6 @@ export default function Habits() {
     function sendhabit(e){
         
         e.preventDefault();
-        console.log(config)
-        console.log(bodyParameters)
         setBtstats(true)
 
         const sendhabit = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits", bodyParameters, config )

@@ -16,6 +16,7 @@ export default function NavBar() {
 }
 
 const NavContainer = styled.div`
+z-index: 4;
 font-family: 'Playball', cursive;
     width: 100vw;
     height: 70px;

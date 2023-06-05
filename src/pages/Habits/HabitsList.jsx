@@ -24,7 +24,6 @@ export default function HabitsList({ list }) {
         <>
             <List data-test="habit-container" >
                 <h4 data-test="habit-name" >{list.name}</h4>
-                {console.log(list.days)}
                 <WeekDays>
                     <Day data-test="habit-day" id="0" stats={list.days.includes(0) ? true : false} >D</Day>
                     <Day data-test="habit-day" id="1" stats={list.days.includes(1) ? true : false} >S</Day>
