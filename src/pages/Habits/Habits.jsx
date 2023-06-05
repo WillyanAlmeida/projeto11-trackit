@@ -3,16 +3,16 @@ import HabitsList from "./HabitsList"
 import { UserContext } from "../../Context"
 import { useContext, useState, useEffect } from "react"
 import axios from "axios";
-
-
+import { useNavigate } from "react-router-dom";
 
 export default function Habits() {
-    const { user, listhabits, setListhabits, get, setGet } = useContext(UserContext);
+    const { user, listhabits, setListhabits, get, setGet, setProgressBar, setListItens, listItens } = useContext(UserContext);
     let [habit, setHabit] = useState('')
     let [days, setDays] = useState([])
-    
+    let x =0;
     let [savehabit, setSavehabit] = useState(false)
     let [btstats, setBtstats] = useState(false)
+    const navigate = useNavigate()  
 
     const config = {
         headers: {
@@ -28,7 +28,7 @@ export default function Habits() {
         axios.get(
             'https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits',
             config
-        ).then(x => setListhabits(x.data)).catch(x => console.log(x));
+        ).then(x => setListhabits(x.data)).catch(() => navigate("/"));
     }, [get]);
 
     function selectDay(e) {
@@ -41,6 +41,22 @@ export default function Habits() {
         }
         console.log(days)
         console.log(bodyParameters)
+    }
+    useEffect(() => {
+        console.log(config)
+        axios.get(
+            'https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/today',
+            config
+        ).then(x => setListItens(x.data)).catch(x => console.log(x));
+    }, [get]);
+    if(listItens.length!=0){
+    
+        for(let i=0;i<listItens.length;i++){
+            if(listItens[i].done){
+                x++;
+            }
+        }
+        setProgressBar(x/listItens.length*100)
     }
     function sendhabit(e){
         
@@ -71,26 +87,24 @@ export default function Habits() {
 
                 <AddHabit>
                     <p>Meus hábitos</p>
-                    <button onClick={() => savehabit ? setSavehabit(false) : setSavehabit(true)}>+</button>
+                    <button data-test="habit-create-btn" onClick={() => savehabit ? setSavehabit(false) : setSavehabit(true)}>+</button>
                 </AddHabit>
                 {savehabit ?
-                    <SaveHabitForm onSubmit={sendhabit}>
+                    <SaveHabitForm data-test="habit-create-container" onSubmit={sendhabit}>
 
-                        <input disabled={btstats} placeholder="nome do hábito" type="text" value={habit} onChange={e => setHabit(e.target.value)} />
+                        <input data-test="habit-name-input" disabled={btstats} placeholder="nome do hábito" type="text" value={habit} onChange={e => setHabit(e.target.value)} />
                         <WeekDays disabled={btstats}>
-                            <Day id="0" stats={days.includes('0') ? true : false} onClick={selectDay} >D</Day>
-                            <Day id="1" stats={days.includes('1') ? true : false} onClick={selectDay} >S</Day>
-                            <Day id="2" stats={days.includes('2') ? true : false} onClick={selectDay} >T</Day>
-                            <Day id="3" stats={days.includes('3') ? true : false} onClick={selectDay} >Q</Day>
-                            <Day id="4" stats={days.includes('4') ? true : false} onClick={selectDay} >Q</Day>
-                            <Day id="5" stats={days.includes('5') ? true : false} onClick={selectDay} >S</Day>
-                            <Day id="6" stats={days.includes('6') ? true : false} onClick={selectDay} >S</Day>
+                            <Day data-test="habit-day" id="0" stats={days.includes('0') ? true : false} onClick={selectDay} >D</Day>
+                            <Day data-test="habit-day" id="1" stats={days.includes('1') ? true : false} onClick={selectDay} >S</Day>
+                            <Day data-test="habit-day" id="2" stats={days.includes('2') ? true : false} onClick={selectDay} >T</Day>
+                            <Day data-test="habit-day" id="3" stats={days.includes('3') ? true : false} onClick={selectDay} >Q</Day>
+                            <Day data-test="habit-day" id="4" stats={days.includes('4') ? true : false} onClick={selectDay} >Q</Day>
+                            <Day data-test="habit-day" id="5" stats={days.includes('5') ? true : false} onClick={selectDay} >S</Day>
+                            <Day data-test="habit-day" id="6" stats={days.includes('6') ? true : false} onClick={selectDay} >S</Day>
                         </WeekDays>
                         <Options>
-                            <span onClick={()=>{
-                                setSavehabit(false)
-                            }}>Cancelar</span>
-                            <button disabled={btstats} type="submit">Salvar</button>
+                            <span data-test="habit-create-cancel-btn" onClick={()=>{setSavehabit(false)}}>Cancelar</span>
+                            <button data-test="habit-create-save-btn" disabled={btstats} type="submit">Salvar</button>
                         </Options>
                     </SaveHabitForm> : ""}
                 {listhabits.length === 0 ?
@@ -106,8 +120,7 @@ export default function Habits() {
 const HabitContainers = styled.div`
     background-color: #E5E5E5;
     height: 100vh;
-    margin-top: 70px;
-    
+    margin-top: 70px;    
     display:flex;
     flex-direction: column;
     align-items: center;
@@ -121,12 +134,9 @@ const MyHabitsContainer = styled.div`
             font-weight: 400;
             font-size: 17.976px;
             line-height: 22px;
-
             color: #666666;
-            width: 338px;
-            
-            margin-top: 1px;
-            
+            width: 338px;            
+            margin-top: 1px;            
         }
 `
 const AddHabit = styled.div`
@@ -163,7 +173,6 @@ const AddHabit = styled.div`
 `
 
 const SaveHabitForm = styled.form`
-
     width: 340px;
     height: 180px;
     background: #FFFFFF;
@@ -212,8 +221,7 @@ const Options = styled.div`
     align-items:center;
     margin-right: 16px;
     right: 10;
-    gap: 25px;
-   
+    gap: 25px;   
     span{
         font-family: 'Lexend Deca';
         font-style: normal;
@@ -221,9 +229,7 @@ const Options = styled.div`
         font-size: 15.976px;
         line-height: 20px;
         text-align: center;
-
         color: #52B6FF;
-
     }
     button{
         width: 84px;

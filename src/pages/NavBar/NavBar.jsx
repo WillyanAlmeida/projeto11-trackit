@@ -1,8 +1,6 @@
 import styled from "styled-components";
-
 import { UserContext } from "../../Context"
 import { useContext} from "react"
-
 
 
 
@@ -10,15 +8,12 @@ export default function NavBar() {
     const { user } = useContext(UserContext);
     
     return (
-        <NavContainer>
+        <NavContainer data-test="header">
             <p>TrackIt</p>
-            <img src={user.image}></img>
-
+            <img data-test="avatar" src={user.image}></img>
         </NavContainer>
     )
-
 }
-
 
 const NavContainer = styled.div`
 font-family: 'Playball', cursive;
@@ -43,7 +38,6 @@ font-family: 'Playball', cursive;
         line-height: 49px;
         letter-spacing: 0em;
         text-align: left;
-
         color: #fff;
     }
     img{

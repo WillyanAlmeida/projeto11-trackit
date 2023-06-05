@@ -1,13 +1,12 @@
 import styled from "styled-components";
 import delet from '../../assets/delet.png';
 import { UserContext } from "../../Context"
-import { useContext, useState, useEffect } from "react"
+import { useContext } from "react"
 import axios from "axios";
 
 export default function HabitsList({ list }) {
-    const { user, setListhabits, listhabits, setGet, get } = useContext(UserContext);
+    const { user, setGet } = useContext(UserContext);    
     
-    console.log(list)
     const config = {
         headers: {
             "Authorization": `Bearer ${user.token}`
@@ -18,36 +17,32 @@ export default function HabitsList({ list }) {
        if (confirm('Deseja excluir esse hábito?')){
         const deletex = axios.delete(`https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/habits/${list.id}`, config)
         deletex.then(x => setGet(y))
-        deletex.catch(x => console.log(x));}
-        
+        deletex.catch(x => console.log(x));}        
     }
 
     return (
         <>
-            <List>
-                <h4>{list.name}</h4>
+            <List data-test="habit-container" >
+                <h4 data-test="habit-name" >{list.name}</h4>
                 {console.log(list.days)}
                 <WeekDays>
-                    <Day id="0" stats={list.days.includes(0) ? true : false} >D</Day>
-                    <Day id="1" stats={list.days.includes(1) ? true : false} >S</Day>
-                    <Day id="2" stats={list.days.includes(2) ? true : false} >T</Day>
-                    <Day id="3" stats={list.days.includes(3) ? true : false} >Q</Day>
-                    <Day id="4" stats={list.days.includes(4) ? true : false} >Q</Day>
-                    <Day id="5" stats={list.days.includes(5) ? true : false} >S</Day>
-                    <Day id="6" stats={list.days.includes(6) ? true : false} >S</Day>
+                    <Day data-test="habit-day" id="0" stats={list.days.includes(0) ? true : false} >D</Day>
+                    <Day data-test="habit-day" id="1" stats={list.days.includes(1) ? true : false} >S</Day>
+                    <Day data-test="habit-day" id="2" stats={list.days.includes(2) ? true : false} >T</Day>
+                    <Day data-test="habit-day" id="3" stats={list.days.includes(3) ? true : false} >Q</Day>
+                    <Day data-test="habit-day" id="4" stats={list.days.includes(4) ? true : false} >Q</Day>
+                    <Day data-test="habit-day" id="5" stats={list.days.includes(5) ? true : false} >S</Day>
+                    <Day data-test="habit-day" id="6" stats={list.days.includes(6) ? true : false} >S</Day>
                 </WeekDays>
-                <img onClick={DeletHabit} src={delet}></img>
-            </List>
-
-           
+                <img data-test="habit-delete-btn" onClick={DeletHabit} src={delet}></img>
+            </List>           
         </>
-
     )
 }
 
 const List = styled.div`
-margin-bottom: 10px;
-position: relative;
+    margin-bottom: 10px;
+    position: relative;
     width: 340px;
     height: 0 auto;
     background: #FFFFFF;
@@ -63,7 +58,7 @@ position: relative;
     right: 10px;
     top: 11px;
    }
-`;
+`
 
 const WeekDays = styled.div`
     display: flex;

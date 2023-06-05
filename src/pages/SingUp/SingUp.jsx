@@ -4,8 +4,6 @@ import axios from 'axios';
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
-
-
 export default function SingUp() {
     let [email, setEmail] = useState('');
     let [password, setPassword] = useState('')
@@ -49,10 +47,9 @@ export default function SingUp() {
                 <button disabled={btstats}  data-test="signup-btn" type="submit">Cadastrar</button>
 
             </FormContainer>
-            <Link to={`/`}>
+            <Link data-test="login-link" to={`/`}>
                 <p> Já tem uma conta? Faça login! </p>
             </Link>
-
 
         </PageContainer>
     )
@@ -90,12 +87,10 @@ const FormContainer = styled.form`
     font-size: 18px;
     button {
         margin-bottom: 10px;
-        width: calc(100vw - 60px);
-        
+        width: calc(100vw - 60px);        
         background-color: ${btstats => btstats.btstats ? 'gray' : '#52B6FF'};
     }
-    input {
-       
+    input {       
         width: calc(100vw - 60px);
     }
    `

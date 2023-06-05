@@ -1,31 +1,29 @@
-import styled from "styled-components"
-
-import logo from '../../assets/logo.png'
+import styled from "styled-components";
+import logo from '../../assets/logo.png';
 import axios from 'axios';
-import { useState, useEffect, useContext } from "react";
+import { useState, useContext } from "react";
 import { UserContext } from "../../Context";
 import { Link, useNavigate } from "react-router-dom";
 
 
 export default function HomePage() {
     let [email, setEmail] = useState('');
-    let [password, setPassword] = useState('')
-    const { user, setUser} = useContext(UserContext);
-    const navigate = useNavigate()
+    let [password, setPassword] = useState('');
+    const {setUser} = useContext(UserContext);
+    const navigate = useNavigate();
 
     function loginpost(e) {
 
-        e.preventDefault();
-       
+        e.preventDefault();       
 
         const cadastro = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login", {
             email: email,
             password: password
-        })
+        });
         cadastro.then((x) => {
             setUser(x.data)
             navigate('/habitos')
-        })
+        });
 
         cadastro.catch(erro => {
             alert(erro.response.data.message);
@@ -44,13 +42,11 @@ export default function HomePage() {
 
                 <button data-test="login-btn" type="submit">Entrar</button>
                 
-                <Link to={`/cadastro`}>
+                <Link data-test="signup-link" to={`/cadastro`}>
                 <p> Não tem uma conta? Cadastre-se! </p>
                 
                 </Link>
             </FormContainer>
-
-
         </PageContainer>
     )
 }
@@ -89,7 +85,6 @@ const FormContainer = styled.form`
         width: calc(100vw - 60px);
     }
     p{
-
         margin-top: 10px;
         color: #52B6FF;
         font-size: 14px;
