@@ -64,7 +64,7 @@ const PageContainer = styled.div`
     font-size: 24px;
     text-align: center;
     color: #293845;
-    margin-top: 30px;
+    margin-top: 50px;
     padding-top: 0px;
     img{
         width: 180px;
