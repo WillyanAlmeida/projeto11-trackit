@@ -4,6 +4,7 @@ import { UserContext } from "../../Context"
 import { useContext, useState, useEffect } from "react"
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import {ThreeDots }from "react-loader-spinner";
 
 export default function Habits() {
     const { user, listhabits, setListhabits, get, setGet, setProgressBar, setListItens, listItens } = useContext(UserContext);
@@ -104,7 +105,7 @@ export default function Habits() {
                         </WeekDays>
                         <Options>
                             <span data-test="habit-create-cancel-btn" onClick={()=>{setSavehabit(false)}}>Cancelar</span>
-                            <button data-test="habit-create-save-btn" disabled={btstats} type="submit">Salvar</button>
+                            {btstats ? <button data-test="habit-create-save-btn" disabled={btstats} type="submit"><ThreeDots color="rgba(255, 255, 255, 1)" height={13} width={51} /></button> : <button data-test="habit-create-save-btn" disabled={btstats} type="submit">Salvar</button>}
                         </Options>
                     </SaveHabitForm> : ""}
                 {listhabits.length === 0 ?
