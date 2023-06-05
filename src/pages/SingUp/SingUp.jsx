@@ -3,6 +3,7 @@ import logo from '../../assets/logo.png'
 import axios from 'axios';
 import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import {ThreeDots }from "react-loader-spinner";
 
 export default function SingUp() {
     let [email, setEmail] = useState('');
@@ -47,7 +48,7 @@ export default function SingUp() {
 
                 <input disabled={btstats} data-test="user-image-input" id="picture" required type="url" placeholder="foto" value={picture} onChange={e => setPicture(e.target.value)} />
 
-                <button disabled={btstats}  data-test="signup-btn" type="submit">Cadastrar</button>
+               {btstats?<button disabled={btstats}  data-test="signup-btn" type="submit"><ThreeDots color="rgba(255, 255, 255, 1)" height={13} width={51}/></button> :<button disabled={btstats}  data-test="signup-btn" type="submit">Cadastrar</button>}
 
             </FormContainer>
             <Link data-test="login-link" to={`/`}>
@@ -60,15 +61,16 @@ export default function SingUp() {
 
 const PageContainer = styled.div`
     display: flex;
+    height: 100vh;
     flex-direction: column;
-    justify-content: center;
+    
     align-items: center;
     font-family: 'Roboto';
     font-size: 24px;
     text-align: center;
     color: #293845;
-    margin-top: 30px;
-    padding-top: 70px;
+    margin-top: 50px;
+   padding-top:1px;
     img{
         width: 180px;
         height: 180px;
@@ -80,13 +82,14 @@ const PageContainer = styled.div`
     }
 `
 const FormContainer = styled.form`
+
     width: calc(100vw - 40px); 
     display: flex;
-    gap: 10px;
+    
     flex-direction: column;
-    align-items: flex-start;
-    margin: 10px 0 10px 0;
-    margin-bottom: 10px;
+    align-items: center;
+    
+  
     font-size: 18px;
     button {
         margin-bottom: 10px;

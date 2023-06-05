@@ -44,7 +44,7 @@ export default function HomePage() {
 
                 <input disabled={bts} data-test="password-input" id="password" required type="password" placeholder="senha" value={password} onChange={e => setPassword(e.target.value)} />
 
-                {bts? <button disabled={bts} data-test="login-btn" type="submit"> <ThreeDots color="rgba(255, 255, 255, 1)" height={13} width={51} /></button>:<button disabled={bts} data-test="login-btn" type="submit">'Entrar'</button>}
+                {bts? <button disabled={bts} data-test="login-btn" type="submit"> <ThreeDots color="rgba(255, 255, 255, 1)" height={13} width={51} /></button>:<button disabled={bts} data-test="login-btn" type="submit">Entrar</button>}
                 
                 <Link data-test="signup-link" to={`/cadastro`}>
                 <p> Não tem uma conta? Cadastre-se! </p>
@@ -65,7 +65,7 @@ const PageContainer = styled.div`
     text-align: center;
     color: #293845;
     margin-top: 30px;
-    padding-top: 70px;
+    padding-top: 0px;
     img{
         width: 180px;
         height: 180px;
