@@ -115,8 +115,11 @@ export default function Habits() {
 
 const HabitContainers = styled.div`
     background-color: #E5E5E5;
-    height: 100vh;
-    margin-top: 70px;    
+    height: 100%;
+    margin-top: 70px; 
+    overflow:scroll;
+    margin-bottom: 70px ;  
+    padding-bottom: 35px; 
     display:flex;
     flex-direction: column;
     align-items: center;

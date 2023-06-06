@@ -62,7 +62,7 @@ export default function Today() {
         <>
             <TodayList progressBar={progressBar}>
                 <p data-test="today">{day}</p>
-                {progressBar != 0 ? <h3 data-test="today-counter">{progressBar}% dos hábitos concluídos</h3> :
+                {progressBar != 0 ? <h3 data-test="today-counter">{progressBar.toFixed(0)}% dos hábitos concluídos</h3> :
                     <h3 data-test="today-counter">Nenhum hábito concluído ainda</h3>}
                 <>{listItens.map((x) => <Itens key={x.id} list={x} />)}</>
             </TodayList>
@@ -72,11 +72,13 @@ export default function Today() {
 
 const TodayList = styled.div`
     margin-top: 70px;
+    overflow:scroll;
     display: flex;
     flex-direction: column;        
-    height: 100vh;
+    height: 100%;
     background: #E5E5E5;
-    margin-bottom: 18px;        
+    margin-bottom: 70px ;  
+    padding-bottom: 35px;    
     padding-left:17px;
     padding-right: 18px;
     font-family: Lexend Deca;
@@ -94,5 +96,6 @@ const TodayList = styled.div`
         line-height: 22px;
         color: ${props => props.progressBar != 0 ? '#8FC549' : '#BABABA'};
     }
+    
     `
 
